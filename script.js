@@ -1,16 +1,42 @@
+/*
+create variables for start button
+and questions
+and answers
+timer starts when "start button' is pushed
+questions appear
+when answered, another question appears
+when incorrect time is subtracted from clock
+when all questions are answered OR clock = 0, game is over
+save intials and score using local storage
+*/
+
 var startButton = document.getElementById('start-btn')
 var nextButton = document.getElementById('next-btn')
 var questionContainerElement = document.getElementById('question-container')
 var questionElement = document.getElementById('question')
 var answerButtonsElement = document.getElementById('answer-buttons')
-
-let shuffledQuestions, currentQuestionIndex
+var countdownElement = document.getElementById('countdown')
 
 startButton.addEventListener('click', startGame)
 nextButton.addEventListener('click', () => {
   currentQuestionIndex++
   setNextQuestion()
 })
+
+startButton.addEventListener('click', startTimer)
+function startTimer(){
+  var secondsRemaining = 60
+  var timerInterval = setInterval(function(){
+       secondsRemaining-- 
+          countdownElement.textContent = secondsRemaining
+      if (secondsRemaining === 0){
+          clearInterval(timerInterval)   
+      }
+  }, 1000)
+
+}
+
+
 
 function startGame() {
   startButton.classList.add('hide')
@@ -20,6 +46,7 @@ function startGame() {
   setNextQuestion()
 }
 
+
 function setNextQuestion() {
   resetState()
   showQuestion(shuffledQuestions[currentQuestionIndex])
@@ -28,7 +55,7 @@ function setNextQuestion() {
 function showQuestion(question) {
   questionElement.innerText = question.question
   question.answers.forEach(answer => {
-    const button = document.createElement('button')
+    var button = document.createElement('button')
     button.innerText = answer.text
     button.classList.add('btn')
     if (answer.correct) {
@@ -111,3 +138,9 @@ const questions = [
       ]
     }
 ]
+
+var counter = 0;
+if (answer.correct) {
+  counter = counter + 1;
+  document.write ('score' + counter);
+}
