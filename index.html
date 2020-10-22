@@ -9,22 +9,32 @@
 </head>
 <body>
 
+ 
+  
   <div class="container">
+    <div id="score">0</div>
+    <div id="countdown">Time Remaining</div>
     <div id="question-container" class="hide">
       <div id="question">Question</div>
       <div id="answer-buttons" class="btn-grid">
         <button class="btn">Answer 1</button>
         <button class="btn">Answer 2</button>
         <button class="btn">Answer 3</button>
-        <div id="countdown">Time Remaining</div>
+        
+    
       </div>
     </div>
-    <div id="countdown">Time Remaining</div>
+   
+  <button class="btn hide" id= "save">save</button>
+  <input id = "initials" class ="hide"></input>
     <div class="controls">
       <button id="start-btn" class="start-btn btn">Start</button>
       <button id="next-btn" class="next-btn btn hide">Next</button>
     </div>
+    <ul id="scoreList">
+    </ul>
   </div>
+  
   <script src="script.js"></script>
 </body>
 </html>

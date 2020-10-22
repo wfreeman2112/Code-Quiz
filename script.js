@@ -7,7 +7,9 @@ questions appear
 when answered, another question appears
 when incorrect time is subtracted from clock
 when all questions are answered OR clock = 0, game is over
-save intials and score using local storage
+when game ends input box for initials
+store initials and score 
+display high score
 */
 
 var startButton = document.getElementById('start-btn')
@@ -16,6 +18,13 @@ var questionContainerElement = document.getElementById('question-container')
 var questionElement = document.getElementById('question')
 var answerButtonsElement = document.getElementById('answer-buttons')
 var countdownElement = document.getElementById('countdown')
+var counter = 0
+var secondsRemaining = 60
+var saveButton = document.getElementById('save')
+var initialInput = document.getElementById('initials')
+var scoreList = document.getElementById('scoreList')
+
+saveButton.addEventListener('click', saveScore)
 
 startButton.addEventListener('click', startGame)
 nextButton.addEventListener('click', () => {
@@ -25,11 +34,11 @@ nextButton.addEventListener('click', () => {
 
 startButton.addEventListener('click', startTimer)
 function startTimer(){
-  var secondsRemaining = 60
+
   var timerInterval = setInterval(function(){
        secondsRemaining-- 
           countdownElement.textContent = secondsRemaining
-      if (secondsRemaining === 0){
+      if (secondsRemaining <= 0){
           clearInterval(timerInterval)   
       }
   }, 1000)
@@ -81,11 +90,22 @@ function selectAnswer(e) {
   Array.from(answerButtonsElement.children).forEach(button => {
     setStatusClass(button, button.dataset.correct)
   })
+
+  if (correct) {
+    counter = counter + 1;
+    document.getElementById ('score').innerText = counter; 
+
+} else {
+  secondsRemaining = secondsRemaining - 5
+}
+
   if (shuffledQuestions.length > currentQuestionIndex + 1) {
     nextButton.classList.remove('hide')
   } else {
-    startButton.innerText = 'Restart'
-    startButton.classList.remove('hide')
+    //startButton.innerText = 'Restart'
+    //startButton.classList.remove('hide')
+    saveButton.classList.remove('hide')
+    initialInput.classList.remove('hide')
   }
 }
 
@@ -101,6 +121,25 @@ function setStatusClass(element, correct) {
 function clearStatusClass(element) {
   element.classList.remove('correct')
   element.classList.remove('wrong')
+}
+
+function saveScore() {
+  var initials = initialInput.value
+  var oldScore = window.localStorage.getItem('high score') || ""
+  window.localStorage.setItem('high score', oldScore + ',' + initials + " " + counter)
+showHighScore()
+}
+
+function showHighScore() {
+  var scores = window.localStorage.getItem('high score').split(",")
+  saveButton.classList.add('hide')
+  initialInput.classList.add('hide')
+  for (var i = 0; i<scores.length; i++){
+  var li = document.createElement('li')
+  li.innerText = scores[i]
+  scoreList.appendChild(li)
+  }
+  scoreList.classList.remove('hide')
 }
 
 const questions = [
@@ -139,8 +178,5 @@ const questions = [
     }
 ]
 
-var counter = 0;
-if (answer.correct) {
-  counter = counter + 1;
-  document.write ('score' + counter);
-}
+
+
