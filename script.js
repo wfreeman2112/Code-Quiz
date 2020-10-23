@@ -19,7 +19,7 @@ var questionElement = document.getElementById('question')
 var answerButtonsElement = document.getElementById('answer-buttons')
 var countdownElement = document.getElementById('countdown')
 var counter = 0
-var secondsRemaining = 60
+var secondsRemaining = 30
 var saveButton = document.getElementById('save')
 var initialInput = document.getElementById('initials')
 var scoreList = document.getElementById('scoreList')
@@ -33,18 +33,22 @@ nextButton.addEventListener('click', () => {
 })
 
 startButton.addEventListener('click', startTimer)
+var timerInterval 
 function startTimer(){
 
-  var timerInterval = setInterval(function(){
+  timerInterval = setInterval(function(){
        secondsRemaining-- 
           countdownElement.textContent = secondsRemaining
       if (secondsRemaining <= 0){
-          clearInterval(timerInterval)   
+        stopTimer()    
       }
   }, 1000)
 
 }
 
+function stopTimer() {
+  clearInterval(timerInterval)
+}
 
 
 function startGame() {
@@ -93,7 +97,7 @@ function selectAnswer(e) {
 
   if (correct) {
     counter = counter + 1;
-    document.getElementById ('score').innerText = counter; 
+    document.getElementById ('score').innerText = ("score ") + counter; 
 
 } else {
   secondsRemaining = secondsRemaining - 5
@@ -102,8 +106,7 @@ function selectAnswer(e) {
   if (shuffledQuestions.length > currentQuestionIndex + 1) {
     nextButton.classList.remove('hide')
   } else {
-    //startButton.innerText = 'Restart'
-    //startButton.classList.remove('hide')
+  
     saveButton.classList.remove('hide')
     initialInput.classList.remove('hide')
   }
@@ -124,10 +127,13 @@ function clearStatusClass(element) {
 }
 
 function saveScore() {
+  questionContainerElement.classList.add('hide')
+  stopTimer()
   var initials = initialInput.value
   var oldScore = window.localStorage.getItem('high score') || ""
   window.localStorage.setItem('high score', oldScore + ',' + initials + " " + counter)
 showHighScore()
+
 }
 
 function showHighScore() {
@@ -144,36 +150,36 @@ function showHighScore() {
 
 const questions = [
   {
-    question: 'question1',
+    question: 'who invented Javascript?',
     answers: [
-      { text: 'answer1', correct: true },
-      { text: 'answer2', correct: false },
-      { text: 'answer3', correct: false }
+      { text: 'Netscape', correct: true },
+      { text: 'Jimmy Starbucks', correct: false },
+      { text: 'Dunkin Donuts', correct: false }
     ]
   },
   {
-    question: 'question2',
+    question: 'what is a string?',
     answers: [
-      { text: 'answer1', correct: false },
-      { text: 'answer2', correct: false },
-      { text: 'answer3', correct: true }
+      { text: 'a thing my cat plays with', correct: false },
+      { text: 'a type of noodle', correct: false },
+      { text: 'characters inside quotes', correct: true }
     ]
   },
   {
-    question: 'question3',
+    question: 'what is an event handler?',
       answers: [
-        { text: 'answer1', correct: false },
-        { text: 'answer2', correct: false },
-        { text: 'answer3', correct: true }
+        { text: 'a wedding planner', correct: false },
+        { text: 'a caterer', correct: false },
+        { text: 'a way to handle user input', correct: true }
       ]
     },
   
     {
-      question: 'question4',
+      question: 'what does console.log do?',
       answers: [
-        { text: 'answer1', correct: false },
-        { text: 'answer2', correct: true },
-        { text: 'answer3', correct: false }
+        { text: 'its a Captains log like on Star Trek', correct: false },
+        { text: 'prints text to the console', correct: true },
+        { text: 'logs onto your computer', correct: false }
       ]
     }
 ]
