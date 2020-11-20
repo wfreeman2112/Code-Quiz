@@ -8,7 +8,3 @@ To deploy, press "Start", then it asks a series of questions. For each wrong ans
 
 deployed website- https://wfreeman2112.github.io/Code-Quiz/
 
-I used a youtube video to help me write the code to design with the color changing answers-
-https://www.youtube.com/watch?v=riDzcEQbX6k
-
-The timer, score, time deduction and initial saving I worked on myself or with the help of my tutor.
